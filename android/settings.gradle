@@ -1,0 +1,3 @@
+rootProject.name = 'big_proj'
+
+include ':app'
