@@ -6,6 +6,7 @@ import {
   View
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import {connect} from 'react-redux';
 import { CardSection, RedButton, Button, Header, GreyButton } from './common';
 
 class Main extends Component {
@@ -59,6 +60,11 @@ class Main extends Component {
     return (
       <View style={styles.containerStyle}>
             <Header headerText="Playball"/>
+            <CardSection>
+              <Text> {this.props.user.first_name}</Text>
+              <Text> {this.props.user.last_name}</Text>
+              <Text> {this.props.user.email}</Text>
+            </CardSection>
             <CardSection style={styles.alertStyle}>
                <Button>
                  Alerts
@@ -130,5 +136,10 @@ const styles = StyleSheet.create({
 
 
 });
+const mapStateToProps = (state) => {
+     const{ user } = state.auth
+     return { user } 
+}
 
-export default Main;
+
+export default connect(mapStateToProps)(Main);
