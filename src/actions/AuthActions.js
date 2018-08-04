@@ -1,22 +1,21 @@
-import { EMAIL_CHANGED, PASSWORD_CHANGED, LOGIN_USER, LOGIN_USER_FAIL, LOGIN_USER_SUCCESS} from './types';
+import {
+        LOGIN_UPDATE,
+        LOGIN_USER, 
+        LOGIN_USER_FAIL, 
+        LOGIN_USER_SUCCESS
+    } from './types';
 import  axios from 'axios'
 import {Actions} from 'react-native-router-flux';
 
-export const emailChanged = (text) => {
+export const loginEmailChanged = ({text, props}) => {
     return {
-        type: EMAIL_CHANGED,
-        payload: text
+        type: LOGIN_UPDATE,
+        payload: {text, props}
     };
 };
 
-export const passwordChange = (text) => {
-    return {
-        type: PASSWORD_CHANGED,
-        payload: text
-    }
-}
 
-export const loginUser = ({ email }) => {
+export const loginUser = ({ email, password }) => {
     return (dispatch) => {
         dispatch({ type: LOGIN_USER});
         axios.get(`http://172.31.99.199:8000/testUser/${email}`)

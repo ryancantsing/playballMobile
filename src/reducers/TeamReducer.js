@@ -1,7 +1,5 @@
 import {
-    TEAM_NAME_CHANGED,
-    LEAGUE_NAME_CHANGED,
-    TEAM_PASSWORD_CHANGED,
+    TEAM_UPDATE,
     CREATE_TEAM_FAIL, 
     CREATE_TEAM_SUCCESS, 
     CREATE_TEAM,
@@ -26,21 +24,16 @@ import {
         error: '',
         TEAM: null,
         loading: false,
-        teams: []
+        teams: [],
+        activities: []
     }
 
     export default (state = INITIAL_STATE, action) => {
             console.log(action);
         switch(action.type){
-            case TEAM_NAME_CHANGED:
+            case TEAM_UPDATE:
                 console.log(action.payload);
-                return {...state, position: action.payload};
-            case LEAGUE_NAME_CHANGED:
-                console.log(action.payload);
-                return {...state, league_name: action.payload}
-            case TEAM_PASSWORD_CHANGED:
-                console.log(action.payload);
-                return {...state, team_password: action.payload}
+                return {...state, [action.payload.prop] : action.payload.text};
             case CREATE_TEAM:
                 console.log(action.payload);
                 return {...state, loading: true, error: ''};

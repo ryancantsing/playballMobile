@@ -1,5 +1,5 @@
 import {
-    POSITION_CHANGED,
+    PLAYER_UPDATE,
     CREATE_PLAYER_FAIL, 
     CREATE_PLAYER_SUCCESS, 
     CREATE_PLAYER,
@@ -15,21 +15,21 @@ import {
     } from '../actions/types'
 
     const INITIAL_STATE = {
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        error: '',
-        PLAYER: null,
+        position: '',
+        phoneNumber: '',
+        teamPassword:'',
+        teamId: '',
+        userId: '',
+        player: null,
         loading: false
     }
 
     export default (state = INITIAL_STATE, action) => {
             console.log(action);
         switch(action.type){
-        case POSITION_CHANGED:
+            case PLAYER_UPDATE:
                 console.log(action.payload);
-                return {...state, position: action.payload};
+                return {...state, [action.payload.prop] : action.payload.text};
             case CREATE_PLAYER:
                 console.log(action.payload);
                 return {...state, loading: true, error: ''};

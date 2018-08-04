@@ -1,7 +1,5 @@
 import {
-    FIRST_NAME_CHANGED, 
-    LAST_NAME_CHANGED,
-    EMAIL_CHANGED, 
+    USER_UPDATE,
     CREATE_USER_FAIL, 
     CREATE_USER_SUCCESS, 
     CREATE_USER,
@@ -11,7 +9,6 @@ import {
     DELETE_USER,
     DELETE_USER_SUCCESS,
     DELETE_USER_FAIL,
-    PASSWORD_CHANGED
     } from '../actions/types'
 
     const INITIAL_STATE = {
@@ -19,6 +16,7 @@ import {
         last_name: '',
         email: '',
         password: '',
+        confirm_password:'',
         error: '',
         user: null,
         loading: false
@@ -27,18 +25,9 @@ import {
     export default (state = INITIAL_STATE, action) => {
             console.log(action);
         switch(action.type){
-            case FIRST_NAME_CHANGED:
+            case USER_UPDATE:
                 console.log(action.payload);
-                return {...state, first_name: action.payload};
-            case LAST_NAME_CHANGED:
-                console.log(action.payload);
-                return {...state, last_name: action.payload};
-            case EMAIL_CHANGED:
-                console.log(action.payload);
-                return {...state, email: action.payload};
-            case PASSWORD_CHANGED:
-                console.log(action.payload);
-                return {...state, password: action.payload};
+                return {...state, [action.payload.prop] : action.payload.text};
             case CREATE_USER:
                 console.log(action.payload);
                 return {...state, loading: true, error: ''};

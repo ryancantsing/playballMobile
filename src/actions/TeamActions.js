@@ -1,6 +1,5 @@
 import {
-    TEAM_NAME_CHANGED, 
-    TEAM_PASSWORD_CHANGED, 
+    TEAM_UPDATE,
     CREATE_TEAM_FAIL, 
     CREATE_TEAM_SUCCESS, 
     CREATE_TEAM,
@@ -10,30 +9,18 @@ import {
     DELETE_TEAM,
     DELETE_TEAM_SUCCESS,
     DELETE_TEAM_FAIL,
-    LEAGUE_NAME_CHANGED
     } from './types'
 import axios from 'axios'
 import { Actions} from 'react-native-router-flux'
 
 
-export const teamNameChanged = (text) => {
+export const teamNameChanged = ({text, props }) => {
     return {
-        type: TEAM_NAME_CHANGED,
-        payload: text
+        type: TEAM_UPDATE,
+        payload: {props, text}
     };
 };
-export const leagueNameChanged = (text) => {
-    return {
-        type: LEAGUE_NAME_CHANGED,
-        payload: text
-    };
-};
-export const teamPasswordChanged = (text) => {
-    return {
-        type: TEAM_PASSWORD_CHANGED,
-        payload: text
-    };
-};
+
 export const getTeam = ({ id }) => {
     return (dispatch) => {
         dispatch({type: GET_TEAM});

@@ -14,7 +14,8 @@ const INITIAL_STATE = {
     bulletin: '',
     bulletins: [], 
     loading: false, 
-    error: ''
+    error: '',
+    team_id: ''
 }
 
 export default (state = INITIAL_STATE, action) => {

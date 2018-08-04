@@ -1,7 +1,5 @@
 import {
-    ACTIVITY_NAME_CHANGED, 
-    ACTIVITY_DESCRIPTION_CHANGED,
-    ACTIVITY_TYPE_CHANGED, 
+    ACTIVITY_UPDATE,
     CREATE_EVENT_FAIL, 
     CREATE_EVENT_SUCCESS, 
     CREATE_EVENT,
@@ -11,43 +9,17 @@ import {
     DELETE_EVENT,
     DELETE_EVENT_SUCCESS,
     DELETE_EVENT_FAIL,
-    ACTIVITY_DATE_CHANGED,
-    ACTIVITY_TIME_CHANGED
     } from './types'
 import axios from 'axios'
 import { Actions} from 'react-native-router-flux'
 
+export const activityUpdate = (prop, text) => {
+    return {
+        type: ACTIVITY_UPDATE,
+        payload: {prop, text}
+    };
+};
 
-export const activityNameChanged = (text) => {
-    return {
-        type: ACTIVITY_NAME_CHANGED,
-        payload: text
-    };
-};
-export const activityDescriptionChanged = (text) => {
-    return {
-        type: ACTIVITY_DESCRIPTION_CHANGED,
-        payload: text
-    };
-};
-export const activityTypeChanged = (text) => {
-    return {
-        type: ACTIVITY_TYPE_CHANGED,
-        payload: text
-    };
-};
-export const activityDateChanged = (text) => {
-    return {
-        type: ACTIVITY_DATE_CHANGED,
-        payload: text
-    };
-};
-export const activityTimeChanged = (text) => {
-    return {
-        type: ACTIVITY_TIME_CHANGED,
-        payload: text
-    }
-}
 export const getEvent = ({ id }) => {
     return (dispatch) => {
         dispatch({type: GET_EVENT});
@@ -62,10 +34,10 @@ export const getEvent = ({ id }) => {
     };
 };
 
-export const createEvent = ({ id }) => {
+export const createEvent = ({ id, activity }) => {
     return (dispatch) => {
         dispatch({type: CREATE_EVENT});
-        axios.post(`http://172.31.99.199:8000/${id}/createActivity/`)
+        axios.post(`http://172.31.99.199:8000/${id}/createActivity/`, activity)
         .then((response) => {
             console.log(response.data)
             dispatch({ type: CREATE_EVENT_SUCCESS, payload: response.data})
@@ -88,7 +60,7 @@ export const editEvent = ({id}) => {
         })
     };
 };
-export const deleteEvent = ({id}) => {
+export const deleteEvent = ({id }) => {
     return (dispatch) => {
         dispatch({ type: DELETE_EVENT});
         axios.delete(`http://172.31.99.199:8000/${id}/deleteEvent`)

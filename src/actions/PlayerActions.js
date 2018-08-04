@@ -1,12 +1,13 @@
 
 import axios from 'axios'
 import { Actions} from 'react-native-router-flux'
+import { PLAYER_UPDATE } from './types';
 
 
-export const positionChanged = (text) => {
+export const playerUpdate = ({text, props}) => {
     return {
-        type: POSITION_CHANGED,
-        payload: text
+        type: PLAYER_UPDATE,
+        payload: {text, props}
     };
 };
 export const getPlayer = ({ id }) => {

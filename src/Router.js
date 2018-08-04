@@ -3,7 +3,7 @@ import {Scene, Router} from 'react-native-router-flux';
 
 import Main from './components/Main';
 import BigForm from './components/BigForm';
-import TeamPage from './components/TeamPage';
+import TeamPage from './components/viewers/TeamPage';
 import Landing from './components/Landing';
 const RouterComponent = () => {
     return(

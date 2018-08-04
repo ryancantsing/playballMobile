@@ -1,9 +1,5 @@
 import {
-    ACTIVITY_DATE_CHANGED,
-    ACTIVITY_DESCRIPTION_CHANGED,
-    ACTIVITY_NAME_CHANGED,
-    ACTIVITY_TYPE_CHANGED,
-    ACTIVITY_TIME_CHANGED,
+    ACTIVITY_UPDATE,
     CREATE_EVENT_FAIL, 
     CREATE_EVENT_SUCCESS, 
     CREATE_EVENT,
@@ -28,29 +24,17 @@ import {
         activity_description: '',
         activity_date: '',
         error: '',
+        team_id: '',
         activity: null,
         loading: false,
-        activities: []
     }
 
     export default (state = INITIAL_STATE, action) => {
             console.log(action);
         switch(action.type){
-            case ACTIVITY_NAME_CHANGED:
+            case ACTIVITY_UPDATE:
                 console.log(action.payload);
-                return {...state, activity_name: action.payload};
-            case ACTIVITY_DESCRIPTION_CHANGED:
-                console.log(action.payload);
-                return {...state, activity_description: action.payload}
-            case ACTIVITY_DATE_CHANGED:
-                console.log(action.payload);
-                return {...state, activity_date: action.payload};
-            case ACTIVITY_TIME_CHANGED:
-                console.log(action.payload);
-                return {...state, activity_time: action.payload};
-            case ACTIVITY_TYPE_CHANGED:
-                console.log(action.payload);
-                return {...state, activity_type: action.payload};
+                return {...state, [action.payload.prop] : action.payload.text};
             case CREATE_EVENT:
                 console.log(action.payload);
                 return {...state, loading: true, error: ''};

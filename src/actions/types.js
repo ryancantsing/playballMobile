@@ -1,6 +1,5 @@
             // Login Types //
-export const EMAIL_CHANGED = 'email_changed';
-export const PASSWORD_CHANGED = 'password_changed';
+export const LOGIN_UPDATE = 'login_update'
 export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGIN_USER_FAIL = 'login_user_fail';
 export const LOGIN_USER = 'login_user';
@@ -17,7 +16,7 @@ export const GET_PLAYER_FAIL = 'get_player_fail';
 export const GET_TEAMS_ON = 'get_teams_on';
 export const GET_TEAMS_ON_SUCCESS = 'get_teams_on_success';
 export const GET_TEAMS_ON_FAIL = 'get_teams_on_fail';
-export const POSITION_CHANGED = 'position_changed';
+export const PLAYER_UPDATE = 'player_update'
 export const DELETE_PLAYER = 'delete_player';
 export const DELETE_PLAYER_SUCCESS = 'delete_player_success';
 export const DELETE_PLAYER_FAIL = 'delete_player_fail'
@@ -31,10 +30,7 @@ export const DELETE_USER_FAIL = 'delete_user_fail';
 export const EDIT_USER = 'edit_user';
 export const EDIT_USER_SUCCESS = 'edit_user_success';
 export const EDIT_USER_FAIL = 'edit_user_fail';
-export const FIRST_NAME_CHANGED = 'first_name_changed';
-export const LAST_NAME_CHANGED = 'last_name_changed';
-export const USER_EMAIL_CHANGED = 'email_changed';
-export const USER_PASSWORD_CHANGED = 'password changed';
+export const USER_UPDATE = 'user_update';
             // Team Types //
 export const CREATE_TEAM = 'create_team';
 export const CREATE_TEAM_SUCCESS = 'create_team_success';
@@ -51,9 +47,7 @@ export const EDIT_TEAM_FAIL = 'edit_team_fail';
 export const GET_TEAM = 'get_team';
 export const GET_TEAM_SUCCESS = 'get_team_success';
 export const GET_TEAM_FAIL = 'get_team_fail';
-export const TEAM_NAME_CHANGED = 'team_name_changed';
-export const LEAGUE_NAME_CHANGED = 'league_name_changed';
-export const TEAM_PASSWORD_CHANGED = 'team_password_changed';
+export const TEAM_UPDATE = 'team_update';
         // Event Types //
 export const CREATE_EVENT = 'create_event';
 export const CREATE_EVENT_SUCCESS = 'create_event_success';
@@ -70,11 +64,7 @@ export const GET_EVENT_FAIL = 'get_event_fail';
 export const GET_EVENTS = 'get_events';
 export const GET_EVENTS_SUCCESS = 'get_events_success'
 export const GET_EVENTS_FAIL = 'get_events_fail'
-export const ACTIVITY_TYPE_CHANGED = 'activity_type_changed';
-export const ACTIVITY_NAME_CHANGED = 'activity_name_changed';
-export const ACTIVITY_DATE_CHANGED = 'activity_date_changed';
-export const ACTIVITY_TIME_CHANGED = 'activity_time_changed';
-export const ACTIVITY_DESCRIPTION_CHANGED = 'activity_description_changed';
+export const ACTIVITY_UPDATE = 'activity_update';
         // Bulletin Types //
 export const CREATE_BULLETIN = 'create_bulletin';
 export const CREATE_BULLETIN_SUCCESS = 'create_bulletin_success';

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import { View, Text, Picker } from 'react-native';
-import { loginUser, emailChanged, passwordChange} from '../actions';
-import DatePicker from 'react-native-datepicker';
-import { Input, Header, CardSection, RedButton, Card } from './common';
+import { loginUser, playerUpdate, teamUpdate, loginUpdate, activityUpdate, userUpdate } from '../actions';
+import { Card } from './common';
+import { PlayerForm, BulletinForm, ActivityForm, LoginForm, UserForm, TeamForm } from './forms';
 
 class BigForm extends Component {
 
@@ -11,209 +10,110 @@ class BigForm extends Component {
         formState: this.props.formType,
         dateState: Date.now(),
     }
-    onButtonPress(){
-        const {email, password} = this.props;
-        this.props.loginUser({ email, password})
+    onLoginPress(){
+        this.props.loginUser(this.props.auth)
     }
-    onEmailChanged(text){
-        this.props.emailChanged(text);
+    onActivityPress(){
+        this.props.createEvent(id, this.props.activity)
     }
-    onPasswordChange(text){
-        this.props.passwordChange(text);
+    onBulletinPress(){
+        this.props.createBulletin(id, this.props.bulletin)
+    }
+    onTeamPress(){
+        this.props.createTeam(id, this.props.team);
+    }
+    onUserPress(){
+        this.props.createUser(this.props.user);
+    }
+    onPlayerPress(){
+        this.props.createPlayer(user_id, this.props.player, team_id);
     }
 
     formChoice(){
         if(this.state.formState === "user"){
             return(
-                <View>
-                    <Header headerText="Create a User"/>
-                    <CardSection>
-                        <Input
-                        label="First Name"
-                        placeholder="First Name"
-                         />
-                    </CardSection>
-                    <CardSection>
-                        <Input
-                        label="Last Name"
-                        placeholder="Last Name"
-                         />
-                    </CardSection>
-                    <CardSection>
-                        <Input
-                        label="Email"
-                        placeholder="email@email.com" />
-                    </CardSection>
-                    <CardSection>
-                        <Input
-                        label="Password"
-                        placeholder="Password" />
-                    </CardSection>
-                    <CardSection>
-                        <Input
-                        label="Confirm Password"
-                        placeholder="Password" />
-                    </CardSection>
-                </View>
-            )
+                <UserForm
+                    first_name={this.props.user.first_name}
+                    last_name={this.props.user.last_name}
+                    email={this.props.user.email}
+                    password={this.props.user.password}
+                    confirmPassword={this.props.user.confirmPassword}
+                    onUFNChange={value => this.props.playerUpdate({type:'first_name', text: value})}
+                    onULNChange={value => this.props.playerUpdate({type: 'last_name', text: value})}
+                    onUEMChange={value => this.props.playerUpdate({type: 'email', text: value})}
+                    onUPWChange={value => this.props.playerUpdate({type: 'password', text: value})}
+                    onUCPWChange={value => this.props.playerUpdate({type: 'confirm_password', text: value})}
+                    onPress={this.onUserPress.bind(this)}
+                />
+                )
         } else if(this.state.formState === "player"){
             return(
-            <View>
-                <Header headerText="Join a Team"/>
-                <CardSection>
-                    <Input
-                        label="Name"
-                        placeholder="Name"
-                        />
-                </CardSection>
-                <CardSection>
-                    <Input
-                        label="Position"
-                        placeholder="Position"
-                    />
-                </CardSection>
-                <CardSection>
-                    <Input
-                    label="Phone Number"
-                    placeholder=" 555-555-5555" />
-                </CardSection>
-                <CardSection>
-                    <Input
-                        label="Team Password"
-                        placeholder="Password" />
-                </CardSection>
-            </View>
+                <PlayerForm 
+                    position={this.props.player.position}
+                    phoneNumber={this.props.player.phoneNumber}
+                    onPOChange={value => this.props.playerUpdate({type: 'position', text: value})}
+                    onPHChange={value => this.props.playerUpdate({type: 'phoneNumber', text: value})}
+                    onTMPChange={value => this.props.playerUpdate({type: 'teamPassword', text: value})}
+                    onPress={this.onPlayerPress.bind(this)}
+                />
             )
         } else if(this.state.formState === "Team"){
             return(
-            <View>
-                <Header headerText="Create a Team"/>
-                <CardSection>
-                    <Input
-                    label="Team Name"
-                    placeholder="Team Name"
-                    />
-                </CardSection>
-                <CardSection>
-                    <Input
-                    label="League Name"
-                    placeholder="League Name"
-                    />
-                </CardSection>
-                <CardSection>
-                    <Input
-                        label="Team Password"
-                        placeholder="Password" />
-                </CardSection>
-            </View>
-            )
+                <TeamForm
+                    teamName={this.props.team.teamName}
+                    leagueName={this.props.team.leagueName}
+                    teamPassword={this.props.team.teamPassword}
+                    onTMNChange={value => this.props.teamUpdate({props: 'team_name', text: value})}
+                    onTLNChange={value => this.props.teamUpdate({props: 'league_name', text: value})}
+                    onTNWChange={value => this.props.teamUpdate({props: 'team_password', text: value})}
+                    onPress={this.onTeamPress.bind(this)}
+                />)            
         } else if(this.state.formState === "bulletin"){
             return(
-            <View>
-                <CardSection>
-                    <Input
-                        label="Bulletin"
-                        placeholder="Write Bulletin"
-                    />
-                </CardSection>
-            </View>
-            )
+                <BulletinForm
+                    bulletin={this.props.bulletin.bulletin}
+                    onBUChange={value => this.props.bulletinChanged({text: value})}
+                    onPress={this.onBulletinPress.bind(this)}
+                />)
         } else if(this.state.formState === "event"){
+            return(<ActivityForm 
+                   activityName={this.props.activity.activityName}
+                   activityDate={this.props.activity.activityDate}
+                   activityDescription={this.props.activity.activityDescription}
+                   activityTime={this.props.activity.activityTime}
+                   activityType={this.props.activity.activityType}
+                   onANChange={value => this.props.activityUpdate({props: 'activity_name', text: value})}
+                   onADSChange={value => this.props.activityUpdate({props: 'activity_description', text: value})} 
+                   onATChange={ value => this.props.activityUpdate({props: 'activity_time', text: value})}
+                   onATYChange={value => this.props.activityUpdate({props: 'activity_type', text: value})}
+                   onADChange={value => this.props.activityUpdate({props: 'activity_date', text: value})}
+                   onPress={this.onActivityPress.bind(this)}
+                />)
+        } else if(this.state.formState === "login"){
             return(
-                <View>
-                    <Header headerText="Create an Event"/>
-                    <CardSection>
-                        <Picker style = {{flex: 1}} placeholder="Event Type" >
-                            <Picker.Item label="Practice" value="Practice"/>
-                            <Picker.Item label="Game" value="Game"/>
-                            <Picker.Item label="Misc" value="Misc" />
-                        </Picker>
-                    </CardSection>
-                    <CardSection>
-                        <Input
-                            label="Event Name"
-                            placeholder="Event Name"
-                        />
-                    </CardSection>
-                    <CardSection>
-                        <Input
-                            label="Description"
-                            placeholder="Description" />
-                    </CardSection>
-                    <CardSection>
-                        <Text style={{marginLeft: 15, fontSize: 18, paddingTop: 5}}> Date </Text>
-                        <DatePicker
-                            label="Choose Date" 
-                            style={{width: 200, marginLeft: 65}}
-                            mode="date"
-                            placeholder="Select Date"
-                            format="YYYY-MM-DD"
-                            minDate={Date.now()}
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            showIcon={false}
-                            />
-                    </CardSection>
-                    <CardSection>
-                        <Text style={{marginLeft: 15, fontSize: 18, paddingTop: 5}}> Time </Text>
-
-                        <DatePicker 
-                            label="Select Time"
-                            style={{width: 200, marginLeft: 65}}
-                            mode="time"
-                            placeholder="Select Time"
-                            format="HH-MM"
-                            confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
-                            showIcon={false}
-                        />
-
-                    </CardSection>
-                    <CardSection>
-                        <Input
-                            label="Time"
-                            placeholder="Time"
-                        />
-                    </CardSection>
-            </View>
-            )}
-            else if(this.state.formState === "login"){
-                return(
-                    <View>
-                        <Header headerText="Please Login"/>
-
-                        <CardSection>
-                            <Input
-                                label="email"
-                                placeholder="email@email.gov"
-                                value={this.props.email}
-                                onChangeText={this.onEmailChanged.bind(this)}
-                            />
-                        </CardSection>
-                        <CardSection>
-                            <Input
-                                label="Password"
-                                placeholder="passwerd"
-                                value={this.props.password}
-                                onChangeText={this.onPasswordChange.bind(this)} />
-                        </CardSection>
-                        <CardSection>
-                            <RedButton onPress={this.onButtonPress.bind(this)}> Login </RedButton>
-                        </CardSection>
-                </View>
-                )}
-    } 
+                <LoginForm 
+                    email={this.props.auth.loginEmail}
+                    password={this.props.auth.loginPassword}
+                    onLEChange={value => this.props.loginUpdate({props: 'loginEmail', text: value})}
+                    onLPChange={value => this.props.loginUpdate({props: 'loginPassword', text: value})}
+                    onPress={this.onLoginPress.bind(this)}
+                />
+            
+            )
+        } 
+    }
     render(){
         return(
         <Card>
             {this.formChoice()}
         </Card>
-        )}
+        )
+    }
 }
 const mapStateToProps = (state) => {
-    const { email, password } = state.auth;
-    return {email, password}
+    const { loginEmail, loginPassword } = state.auth;
+    return { loginEmail, loginPassword }
 }
 
 
-export default connect( mapStateToProps,{loginUser, emailChanged, passwordChange})(BigForm)
+export default connect( mapStateToProps,{loginUser, loginUpdate, activityUpdate, bulletinChanged, playerUpdate, teamUpdate, userUpdate})(BigForm)

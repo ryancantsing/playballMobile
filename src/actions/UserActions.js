@@ -1,7 +1,5 @@
 import {
-    FIRST_NAME_CHANGED, 
-    LAST_NAME_CHANGED,
-    EMAIL_CHANGED, 
+    USER_UPDATE,
     CREATE_USER_FAIL, 
     CREATE_USER_SUCCESS, 
     CREATE_USER,
@@ -13,33 +11,16 @@ import {
     DELETE_USER_FAIL
     } from './types'
 import axios from 'axios'
-import { Actions} from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux'
 
 
-export const firstNameChanged = (text) => {
+export const userUpdate = ({props, text}) => {
     return {
-        type: FIRST_NAME_CHANGED,
-        payload: text
+        type: USER_UPDATE,
+        payload: {props, text}
     };
 };
-export const lastNameChanged = (text) => {
-    return {
-        type: LAST_NAME_CHANGED,
-        payload: text
-    };
-};
-export const emailChanged = (text) => {
-    return {
-        type: EMAIL_CHANGED,
-        payload: text
-    };
-};
-export const passwordChanged = (text) => {
-    return {
-        type: PASSWORD_CHANGED,
-        payload: text
-    };
-};
+
 export const getUser = ({ id }) => {
     return (dispatch) => {
         dispatch({type: GET_USER});
