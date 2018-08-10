@@ -5,6 +5,7 @@ import {
   Text,
   View
 } from 'react-native';
+import {getUser} from '../actions'
 import {Actions} from 'react-native-router-flux';
 import {connect} from 'react-redux';
 import { CardSection, RedButton, Button, Header, GreyButton } from './common';
@@ -16,6 +17,9 @@ class Main extends Component {
   }
   newPlayer(){
     Actions.form({formType: "player"})
+  }
+  getAUser(){
+    this.props.getUser();
   }
   toggleButtons(){
     if(this.state.statToggle == false){
@@ -61,9 +65,9 @@ class Main extends Component {
       <View style={styles.containerStyle}>
             <Header headerText="Playball"/>
             <CardSection>
-              <Text> {this.props.user.first_name}</Text>
-              <Text> {this.props.user.last_name}</Text>
-              <Text> {this.props.user.email}</Text>
+              <Text> {this.props.session_user.first_name}</Text>
+              <Text> {this.props.session_user.last_name}</Text>
+              <Text> {this.props.session_user.email}</Text>
             </CardSection>
             <CardSection style={styles.alertStyle}>
                <Button>
@@ -89,6 +93,9 @@ class Main extends Component {
             <CardSection style={styles.buttonSectionStyle}>
               <RedButton onPress={this.newTeam.bind(this)}>
                 + Start new Team
+              </RedButton>
+              <RedButton onPress={this.getAUser.bind(this)}>
+                Get A User
               </RedButton>
             </CardSection>
       </View>
@@ -137,9 +144,9 @@ const styles = StyleSheet.create({
 
 });
 const mapStateToProps = (state) => {
-     const{ user } = state.auth
-     return { user } 
+     const{ session_user } = state.auth
+     return { session_user } 
 }
 
 
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, {getUser})(Main);

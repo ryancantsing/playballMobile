@@ -1,16 +1,18 @@
+const jwt = require('jsonwebtoken');
 const players = require('../controllers/players');
 const users = require('../controllers/users');
 const teams = require('../controllers/teams');
 const bulletins = require('../controllers/bulletins');
 const activities = require('../controllers/activities');
 
+
 module.exports = function(app){
-    app.get('/testUser/:email', (req, res) => {
-        console.log("made it to routes TEST user");
-        users.testUser(req, res)
+    app.post('/login', (req, res) => {
+        console.log("made it to routes LOGIN user")
+        users.login(req, res);
     })
-    app.get('/:user_id/getUser', (req, res) => {
-        console.log("made it to routes GET user")
+    app.post('/getuser', verifyToken, (req, res) => {
+        console.log("made it to routes GET user", req.body)
         users.view(req, res)
     })
     app.get('/:id/getPlayer', (req, res) => {
@@ -88,4 +90,24 @@ module.exports = function(app){
         console.log("made it to routes get all activities");
         activities.show(req, res)
     })
+}
+function verifyToken(req, res, next){
+    const bearerHeader = req.headers['authorization']
+    console.log(bearerHeader);
+    
+    if(typeof bearerHeader !== 'undefined'){
+        const bearer = bearerHeader.split(' ');
+        const bearerToken = bearer[1];
+        req.token = bearerToken;
+        console.log(req.token.payload)
+        next();
+    } else if(req.body.key) {
+        const bearerHeader = req.body.key
+        const bearer = bearerHeader.split(' ');
+        const bearerToken = bearer[0];
+        req.token = bearerToken;
+        next();
+    } else {
+       res.json({message: "no token found"})
+    }
 }

@@ -9,6 +9,9 @@ import {
     DELETE_USER,
     DELETE_USER_SUCCESS,
     DELETE_USER_FAIL,
+    GET_USER,
+    GET_USER_FAIL,
+    GET_USER_SUCCESS
     } from '../actions/types'
 
     const INITIAL_STATE = {
@@ -44,7 +47,13 @@ import {
                 return {...state, loading: false, error:'', user: action.payload};
             case EDIT_USER_FAIL:
                 console.log(action.payload)
-                return {...state, ...INITIAL_STATE, error: 'error editing user'}
+                return {...state, ...INITIAL_STATE, error: 'error editing user'};
+            case GET_USER: 
+                return {...state, loading: true, error: ''};
+            case GET_USER_SUCCESS: 
+                return {...state, loading: false, user: action.payload};
+            case GET_USER_FAIL:
+                return {...state, loading: false, error:'error getting user'}
             case DELETE_USER: 
                 console.log(action.payload)
                 return {...state, loading: true, error: ''}
@@ -54,5 +63,7 @@ import {
             case DELETE_USER_FAIL:
                 console.log(action.payload)
                 return {...state, ...INITIAL_STATE };
+            default:
+                return {...state, ...INITIAL_STATE};
         }
     }

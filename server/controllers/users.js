@@ -1,21 +1,30 @@
 const mongoose = require('mongoose').set('debug', true);
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const jwt_decode = require('jwt-decode')
 const User = mongoose.model('User');
-
+const saltrounds = 10;
 module.exports  = {
     create: function(req, res){
-        console.log("checkpoint create user controller");
-        const user = new User({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            email: req.body.email,
-            password: req.body.password,
-
-        });
-        user.save((err, user) => {
+        bcrypt.hash(req.body.password, saltrounds, (err, hash) => {
             if(err){
-                res.json({ message: "Something went wrong adding user"})
+                res.json({message: "error adding bcrypt", err})
             } else {
-                res.json({ message: "Successfully registered!", user})
+
+                const user = new User({
+                    first_name: req.body.first_name,
+                    last_name: req.body.last_name,
+                    email: req.body.email,
+                    password: hash,
+                    
+                });
+                user.save((err, user) => {
+                    if(err){
+                        res.json({ message: "Something went wrong adding user"})
+                    } else {
+                        res.json({ message: "Successfully registered!", user})
+                    }
+                })
             }
         })
     },
@@ -48,24 +57,37 @@ module.exports  = {
         })
     },
     view: function(req, res){
-        console.log("checkpoint get user controller")
-        User.findOne({_id: req.params.user_id}, (err, user) => {
-            console.log(user)
+        console.log(req.token)
+        const returnToken = req.token
+        jwt.verify(returnToken, 'secretbusiness', (err, token) => {
+            if(err){
+                res.json({message: "token not verified", err})
+            } else {
+            console.log("verified! checkpoint get user controller")
+                const user = jwt_decode(returnToken);
+                console.log(user);
+                res.json({message: "got the user", user})
+        }
+        })
+    },
+    login: function(req, res){
+        console.log("checkpoint LOGIN user controller");
+        User.findOne({email: req.body.email}, (err, user) => {
             if(err){
                 res.json({ message: "User not found", err})
             } else {
-                res.json({ message: "User transported", user})
-            }
-        })
-    },
-    testUser: function(req, res){
-        console.log("checkpoint TEST user controller");
-        User.findOne({email: req.params.email}, (err, user) => {
-            console.log(user)
-            if(err){
-                res.json({message: "user not found", err})
-            } else {
-                res.json({message: "found user thank christ", user})
+                if(bcrypt.compareSync(req.body.password, user.password) == true){
+                    console.log("Password Accepted")
+                    jwt.sign({user}, 'secretbusiness', (err, token) => {
+                        if(err){
+                            res.json({message: "error getting token", err})
+                        } else {
+                            res.json({message: "token created", token})
+                        }
+                    })
+                } else {
+                    res.json({message: "invalid password"})
+                }
             }
         })
     }

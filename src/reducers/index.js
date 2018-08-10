@@ -6,6 +6,7 @@ import TeamReducer from './TeamReducer';
 import PlayerReducer from './PlayerReducer';
 import UserReducer from './UserReducer';
 
+
 export default combineReducers({
     auth: AuthReducer,
     activity: ActivityReducer,

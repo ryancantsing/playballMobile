@@ -79,5 +79,7 @@ import {
             case GET_EVENTS_FAIL:
                 console.log(action.payload);
                 return {...state, ...INITIAL_STATE}
+            default: 
+                return {...state, ...INITIAL_STATE}
             }
     }

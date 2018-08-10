@@ -11,7 +11,8 @@ import {
     DELETE_EVENT_FAIL,
     } from './types'
 import axios from 'axios'
-import { Actions} from 'react-native-router-flux'
+import { Actions} from 'react-native-router-flux';
+import { AsyncStorage } from 'react-native'
 
 export const activityUpdate = (prop, text) => {
     return {

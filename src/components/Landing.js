@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Actions} from 'react-native-router-flux'
-import { View, Text} from 'react-native';
+import { View, Text } from 'react-native';
 import { GreyButton, Header, CardSection, Card, RedButton } from './common';
 
 class Landing extends Component {

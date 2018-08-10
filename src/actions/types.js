@@ -31,6 +31,9 @@ export const EDIT_USER = 'edit_user';
 export const EDIT_USER_SUCCESS = 'edit_user_success';
 export const EDIT_USER_FAIL = 'edit_user_fail';
 export const USER_UPDATE = 'user_update';
+export const GET_USER = 'get_user';
+export const GET_USER_SUCCESS = 'get_user_success';
+export const GET_USER_FAIL = 'get_user_fail';
             // Team Types //
 export const CREATE_TEAM = 'create_team';
 export const CREATE_TEAM_SUCCESS = 'create_team_success';

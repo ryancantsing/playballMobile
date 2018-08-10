@@ -8,10 +8,14 @@ import {
     EDIT_USER_SUCCESS,
     DELETE_USER,
     DELETE_USER_SUCCESS,
-    DELETE_USER_FAIL
+    DELETE_USER_FAIL,
+    GET_USER,
+    GET_USER_FAIL,
+    GET_USER_SUCCESS
     } from './types'
 import axios from 'axios'
-import { Actions } from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux';
+import {AsyncStorage} from 'react-native'
 
 
 export const userUpdate = ({props, text}) => {
@@ -21,17 +25,24 @@ export const userUpdate = ({props, text}) => {
     };
 };
 
-export const getUser = ({ id }) => {
+export const getUser = () => {
     return (dispatch) => {
-        dispatch({type: GET_USER});
-        axios.get(`http://172.31.99.199:8000/${id}/getuser/`)
-        .then((response) => {
-            console.log(response.data.USER)
-            dispatch({ type: GET_USER_SUCCESS, payload: response.data.USER})
+        AsyncStorage.getItem('JWT_KEY', (err, key) => {
+            if(err){
+                console.log(err, "error finding key!")
+            } else{
+                dispatch({type: GET_USER});
+                axios.post(`http://172.31.99.199:8001/getuser`, {key})
+                .then((response) => {
+                    console.log(response.data)
+                    dispatch({ type: GET_USER_SUCCESS, payload: response.data.user})
+                })
+                .catch((err) => {
+                    console.log(err)
+                    dispatch({type: GET_USER_FAIL, payload: err})
+                });
+            }
         })
-        .catch((err) => {
-            dispatch({type: GET_USER_FAIL, payload: err})
-        });
     };
 };
 

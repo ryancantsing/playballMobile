@@ -78,5 +78,7 @@ import {
             case GET_TEAMS_COACHED_FAIL:
                 console.log(action.payload);
                 return {...state, ...INITIAL_STATE}
+            default:
+                return {...state, ...INITIAL_STATE};
             }
     }

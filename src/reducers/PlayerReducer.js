@@ -65,5 +65,7 @@ import {
             case GET_PLAYER_FAIL:
                 console.log(action.payload);
                 return {...state, ...INITIAL_STATE, error: 'Error finding player!'}
+            default:
+                return {...state, ...INITIAL_STATE};
             }
     }
