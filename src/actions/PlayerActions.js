@@ -13,7 +13,7 @@ export const playerUpdate = ({text, props}) => {
 export const getPlayer = ({ id }) => {
     return (dispatch) => {
         dispatch({type: GET_PLAYER});
-        axios.get(`http://172.31.99.199:8000/${id}/addPlayer/${team_id}`)
+        axios.get(`http://10.0.0.84:8001/${id}/addPlayer/${team_id}`)
         .then((response) => {
             console.log(response.data.user)
             dispatch({ type: GET_PLAYER_SUCCESS, payload: response.data.user})
@@ -27,7 +27,7 @@ export const getPlayer = ({ id }) => {
 export const createPlayer = ({ id, team_id }) => {
     return (dispatch) => {
         dispatch({type: CREATE_PLAYER});
-        axios.post(`http://172.31.99.199:8000/${id}/addPlayer/${team_id}`)
+        axios.post(`http://10.0.0.84:8001/${id}/addPlayer/${team_id}`)
         .then((response) => {
             console.log(response.data)
             dispatch({ type: CREATE_PLAYER_SUCCESS, payload: response.data})
@@ -40,7 +40,7 @@ export const createPlayer = ({ id, team_id }) => {
 export const editPlayer = ({id}) => {
     return (dispatch) => {
         dispatch({type: EDIT_PLAYER});
-        axios.patch(`http://172.31.99.199:8000/${id}/updatePlayer`)
+        axios.patch(`http://10.0.0.84:8001/${id}/updatePlayer`)
         .then((response) => {
             console.log(response.data);
             dispatch({ type: EDIT_PLAYER_SUCCESS, payload: response.data})
@@ -53,7 +53,7 @@ export const editPlayer = ({id}) => {
 export const deletePlayer = ({id}) => {
     return (dispatch) => {
         dispatch({ type: DELETE_PLAYER});
-        axios.delete(`http://172.31.99.199:8000/${id}/deletePlayer`)
+        axios.delete(`http://10.0.0.84:8001/${id}/deletePlayer`)
         .then((response) => {
             console.log(response.data);
             dispatch({ type: DELETE_PLAYER_SUCCESS, payload: response.data})

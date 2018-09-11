@@ -23,7 +23,7 @@ export const BulletinChanged = (text) => {
 export const getBulletins = ({ id }) => {
     return (dispatch) => {
         dispatch({type: GET_BULLETINS});
-        axios.get(`http://172.31.99.199:8000/${id}/getBulletins/`)
+        axios.get(`http://10.0.0.84:8001/${id}/getBulletins/`)
         .then((response) => {
             console.log(response.data.bulletin)
             dispatch({ type: GET_BULLETINS_SUCCESS, payload: response.data.bulletin})
@@ -37,7 +37,7 @@ export const getBulletins = ({ id }) => {
 export const createBulletin = ({ id }) => {
     return (dispatch) => {
         dispatch({type: CREATE_BULLETIN});
-        axios.post(`http://172.31.99.199:8000/${id}/createBulletin/`)
+        axios.post(`http://10.0.0.84:8001/${id}/createBulletin/`)
         .then((response) => {
             console.log(response.data)
             dispatch({ type: CREATE_BULLETIN_SUCCESS, payload: response.data})
@@ -50,7 +50,7 @@ export const createBulletin = ({ id }) => {
 export const deleteBULLETIN = ({id}) => {
     return (dispatch) => {
         dispatch({ type: DELETE_BULLETIN});
-        axios.delete(`http://172.31.99.199:8000/${id}/deleteBULLETIN`)
+        axios.delete(`http://10.0.0.84:8001/${id}/deleteBULLETIN`)
         .then((response) => {
             console.log(response.data);
             dispatch({ type: DELETE_BULLETIN_SUCCESS, payload: response.data})

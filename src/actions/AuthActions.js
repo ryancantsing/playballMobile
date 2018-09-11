@@ -18,10 +18,10 @@ export const loginUpdate = ({text, props}) => {
 
 
 export const loginUser = (email, password) => {
-    console.log(email, password)
+    console.log("Hey",email, password)
     return (dispatch) => {
         dispatch({ type: LOGIN_USER});
-        axios.post(`http://172.31.99.199:8001/login`, {email, password})
+        axios.post(`http://10.0.0.84:8001/login`, {email, password})
         .then((response) => {
             AsyncStorage.setItem('JWT_KEY', response.data.token, (err) => {
                 if(err){
@@ -39,17 +39,4 @@ export const loginUser = (email, password) => {
             dispatch({type: LOGIN_USER_FAIL, payload: err})
         })
     };
-}
-const loginUserSuccess = (dispatch, response) => {
-    dispatch({
-        type: LOGIN_USER_SUCCESS,
-        payload: response
-    });
-}
-
-const loginUserFail = (dispatch, response) => {
-    dispatch({
-        type: LOGIN_USER_FAIL,
-        payload: response
-    })
 }

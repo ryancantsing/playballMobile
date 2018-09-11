@@ -21,7 +21,7 @@ import {AsyncStorage} from 'react-native'
 export const userUpdate = ({props, text}) => {
     return {
         type: USER_UPDATE,
-        payload: {props, text}
+        payload: {text, props}
     };
 };
 
@@ -32,7 +32,7 @@ export const getUser = () => {
                 console.log(err, "error finding key!")
             } else{
                 dispatch({type: GET_USER});
-                axios.post(`http://172.31.99.199:8001/getuser`, {key})
+                axios.post(`http://10.0.0.84:8001/getuser`, {key})
                 .then((response) => {
                     console.log(response.data)
                     dispatch({ type: GET_USER_SUCCESS, payload: response.data.user})
@@ -46,36 +46,43 @@ export const getUser = () => {
     };
 };
 
-export const createUser = ({ id }) => {
+export const createUser = (user) => {
     return (dispatch) => {
         dispatch({type: CREATE_USER});
-        axios.post(`http://172.31.99.199:8000/createuser/`)
+        axios.post(`http://10.0.0.84:8001/createuser/`, user)
         .then((response) => {
             console.log(response.data)
             dispatch({ type: CREATE_USER_SUCCESS, payload: response.data})
+            Actions.main();
         })
         .catch((err) => {
             dispatch({type: CREATE_USER_FAIL, payload: err})
         });
     };
 };
-export const editUser = ({id}) => {
-    return (dispatch) => {
-        dispatch({type: EDIT_USER});
-        axios.patch(`http://172.31.99.199:8000/${id}/updateUSER`)
-        .then((response) => {
-            console.log(response.data);
-            dispatch({ type: EDIT_USER_SUCCESS, payload: response.data})
-        })
-        .catch((err) => {
-            dispatch({type: EDIT_USER_FAIL, payload: err})
-        })
-    };
+export const editUser = (user) => {
+    AsyncStorage.getItem('JWT_KEY', (err, key) => {
+        if(err){
+            console.log(err, 'Error finding key')
+        } else {
+            return (dispatch) => {
+                dispatch({type: EDIT_USER});
+                axios.patch(`http://10.0.0.84:8001/updateUSER`, user, key)
+                .then((response) => {
+                    console.log(response.data);
+                    dispatch({ type: EDIT_USER_SUCCESS, payload: response.data})
+                })
+                .catch((err) => {
+                    dispatch({type: EDIT_USER_FAIL, payload: err})
+                })
+            }
+        };
+    })
 };
 export const deleteUser = ({id}) => {
     return (dispatch) => {
         dispatch({ type: DELETE_USER});
-        axios.delete(`http://172.31.99.199:8000/${id}/deleteUSER`)
+        axios.delete(`http://10.0.0.84:8001/${id}/deleteUSER`)
         .then((response) => {
             console.log(response.data);
             dispatch({ type: DELETE_USER_SUCCESS, payload: response.data})

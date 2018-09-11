@@ -1,31 +1,45 @@
 var mongoose = require('mongoose').set('debug', true)
+const jwt = require('jsonwebtoken');
+const jwt_decode = require('jwt-decode')
 var Team = mongoose.model('Team');
 var User = mongoose.model('User');
 module.exports = {
     create: function(req, res){
         console.log("checkpoint team create controller");
-        User.findOne({_id: mongoose.Types.ObjectId(req.params.user_id)}, (err, user) => {
-            const coach = `${user.first_name} ${user.last_name}`
-            const team = new Team({
-                coach_name: coach,
-                team_name: req.body.team_name,
-                league_name: req.body.league_name,
-                password: req.body.password,
-                coach_id: req.params.user_id
-            })
-            team.save((err, team) => {
-                console.log(user.teams_coaching)
-                if(err){
-                    res.json({message: "error creating team!", err})
-                } else {
-                    res.json({ message: "Team added!", team})
-                }
-            })
-        }) 
+        const returnToken = req.token
+        jwt.verify(returnToken, 'secretbusiness', (err) => {
+            if(err){
+                res.json({message: "no token found", err})
+            } else {
+                const userDecoder = jwt_decode(returnToken)
+                console.log(userDecoder)
+                User.findOne({_id: userDecoder.user._id}, (err, user) => {
+                    if(err){
+                    res.json({ message: "User not found somehow", err})
+                    } else {
+                        const coach = `${user.first_name} ${user.last_name}`
+                        const team = new Team({
+                            coach_name: coach,
+                            team_name: req.body.team_name,
+                            league_name: req.body.league_name,
+                            password: req.body.password,
+                            coach_id: userDecoder.user._id
+                        })
+                        team.save((err, team) => {
+                            if(err){
+                                res.json({message: "error creating team!", err})
+                            } else {
+                                res.json({ message: "Team added!", team})
+                            }
+                        })
+                    }
+                }) 
+            }
+        })
     },
     view: function(req, res){
         console.log("checkpoint get team controller");
-        const team = Team.findById({_id: req.body.id}, (err, team) =>{
+        Team.findById({_id: req.params.id}, (err, team) =>{
             console.log(team)
             if(err){
                 res.json({ message: "Team not found", err})

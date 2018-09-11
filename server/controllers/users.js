@@ -6,7 +6,9 @@ const User = mongoose.model('User');
 const saltrounds = 10;
 module.exports  = {
     create: function(req, res){
+        console.log(req.body)
         bcrypt.hash(req.body.password, saltrounds, (err, hash) => {
+            console.log(hash)
             if(err){
                 res.json({message: "error adding bcrypt", err})
             } else {
@@ -42,19 +44,34 @@ module.exports  = {
     },
     update: function(req, res){
         console.log("checkpoint update User controller");
-        const user = User.findOne({_id: req.params.user_id})
-        user.update({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            email: req.body.username,
-            password: req.body.password
-        }, (err, user) => {
+        const returnToken = req.token
+        jwt.verify(returnToken, 'secretbusiness', (err, token) => {
             if(err){
-                res.json({message: "Update did not work", err})
+                res.json({ message: "token not verified", err})
             } else {
-                res.json({ message: "successfully updated", user})
-            }
+                const userDecoder = jwt_decode(returnToken)
+                console.log(userDecoder)
+                User.findOne({_id: userDecoder.user._id}, (err, user) => {
+                    if(err){
+                        res.json({message: "User not found", err})
+                    } else {
+                        user.update({
+                            first_name: req.body.first_name,
+                            last_name: req.body.last_name,
+                            email: req.body.username,
+                            password: req.body.password
+                        }, (err, user) => {
+                            if(err){
+                                res.json({message: "Update did not work", err})
+                            } else {
+                                console.log(user)
+                                res.json({ message: "successfully updated", user})
+                            }})
+                    }
+                })
+        }
         })
+    
     },
     view: function(req, res){
         console.log(req.token)

@@ -12,7 +12,6 @@ module.exports = {
             activity_date: req.body.activity_date,
             activity_time: req.body.activity_time,
             activity_type: req.body.activity_type
-
         })
         activity.save((err, activity) => {
             if(err){

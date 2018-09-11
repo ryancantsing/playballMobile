@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import { loginUser, playerUpdate, teamUpdate, loginUpdate, activityUpdate, userUpdate, BulletinChanged } from '../actions';
 import { Card } from './common';
 import { PlayerForm, BulletinForm, ActivityForm, LoginForm, UserForm, TeamForm } from './forms';
+import {AsyncStorage } from 'react-native'
 
 class BigForm extends Component {
 
@@ -23,12 +24,21 @@ class BigForm extends Component {
     onTeamPress(){
         this.props.createTeam(id, this.props.team);
     }
-    onUserPress(){
-        this.props.createUser(this.props.user);
+    onUserCreatePress(){
+        let value = await AsyncStorage.getItem('JWT_KEY')
+        const user = this.props.user
+        if (value != null){
+            this.props.editUser(user)
+        } else {
+            this.props.createUser(user);
+        }
     }
+
+
     onPlayerPress(){
         this.props.createPlayer(user_id, this.props.player, team_id);
     }
+
 
     formChoice(){
         const { first_name, last_name, email, password, confirmPassword } = this.props.user;
@@ -44,12 +54,12 @@ class BigForm extends Component {
                     email={email}
                     password={password}
                     confirmPassword={confirmPassword}
-                    onUFNChange={value => this.props.playerUpdate({props:'first_name', text: value})}
-                    onULNChange={value => this.props.playerUpdate({props: 'last_name', text: value})}
-                    onUEMChange={value => this.props.playerUpdate({props: 'email', text: value})}
-                    onUPWChange={value => this.props.playerUpdate({props: 'password', text: value})}
-                    onUCPWChange={value => this.props.playerUpdate({props: 'confirm_password', text: value})}
-                    onPress={this.onUserPress.bind(this)}
+                    onUFNChange={value => this.props.userUpdate({props:'first_name', text: value})}
+                    onULNChange={value => this.props.userUpdate({props: 'last_name', text: value})}
+                    onUEMChange={value => this.props.userUpdate({props: 'email', text: value})}
+                    onUPWChange={value => this.props.userUpdate({props: 'password', text: value})}
+                    onUCPWChange={value => this.props.userUpdate({props: 'confirm_password', text: value})}
+                    onPress={this.onUserCreatePress.bind(this)}
                 />
                 )
         } else if(this.state.formState === "player"){

@@ -24,7 +24,7 @@ export const teamNameChanged = ({text, props }) => {
 export const getTeam = ({ id }) => {
     return (dispatch) => {
         dispatch({type: GET_TEAM});
-        axios.get(`http://172.31.99.199:8000/${id}/getTeam/`)
+        axios.get(`http://10.0.0.84:8001/${id}/getTeam/`)
         .then((response) => {
             console.log(response.data.team)
             dispatch({ type: GET_TEAM_SUCCESS, payload: response.data.team})
@@ -38,7 +38,7 @@ export const getTeam = ({ id }) => {
 export const createTeam = ({ id }) => {
     return (dispatch) => {
         dispatch({type: CREATE_TEAM});
-        axios.post(`http://172.31.99.199:8000/${id}/addTeam/`)
+        axios.post(`http://10.0.0.84:8001/${id}/addTeam/`)
         .then((response) => {
             console.log(response.data)
             dispatch({ type: CREATE_TEAM_SUCCESS, payload: response.data})
@@ -51,7 +51,7 @@ export const createTeam = ({ id }) => {
 export const editTeam = ({id}) => {
     return (dispatch) => {
         dispatch({type: EDIT_TEAM});
-        axios.patch(`http://172.31.99.199:8000/${id}/updateTeam`)
+        axios.patch(`http://10.0.0.84:8001/${id}/updateTeam`)
         .then((response) => {
             console.log(response.data);
             dispatch({ type: EDIT_TEAM_SUCCESS, payload: response.data})
@@ -64,7 +64,7 @@ export const editTeam = ({id}) => {
 export const deleteTeam = ({id}) => {
     return (dispatch) => {
         dispatch({ type: DELETE_TEAM});
-        axios.delete(`http://172.31.99.199:8000/${id}/deleteTeam`)
+        axios.delete(`http://10.0.0.84:8001/${id}/deleteTeam`)
         .then((response) => {
             console.log(response.data);
             dispatch({ type: DELETE_TEAM_SUCCESS, payload: response.data})

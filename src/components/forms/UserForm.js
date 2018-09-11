@@ -2,15 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { Input, GreyButton, RedButton, CardSection, Header } from '../common';
 
-const UserForm = ({ onPress, 
-                    onUFNChange, 
-                    onULNChange, 
-                    onUEMChange, 
-                    onUPWChange, 
-                    onUCPWChange, 
-                    first_name, last_name, email, password, confirmPassword 
-                    }) => {
-    return (
+const UserForm = ({ onPress, onUFNChange, onULNChange, onUEMChange, onUPWChange, onUCPWChange, first_name, last_name, email, password, confirmPassword }) => {
+    return(
         <View>
             <Header headerText="Create a User"/>
                 <CardSection>

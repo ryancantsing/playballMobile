@@ -24,7 +24,7 @@ export const activityUpdate = (prop, text) => {
 export const getEvent = ({ id }) => {
     return (dispatch) => {
         dispatch({type: GET_EVENT});
-        axios.get(`http://172.31.99.199:8000/${id}/getActivity/`)
+        axios.get(`http://10.0.0.84:8001/${id}/getActivity/`)
         .then((response) => {
             console.log(response.data.EVENT)
             dispatch({ type: GET_EVENT_SUCCESS, payload: response.data.EVENT})
@@ -38,7 +38,7 @@ export const getEvent = ({ id }) => {
 export const createEvent = ({ id, activity }) => {
     return (dispatch) => {
         dispatch({type: CREATE_EVENT});
-        axios.post(`http://172.31.99.199:8000/${id}/createActivity/`, activity)
+        axios.post(`http://10.0.0.84:8001/${id}/createActivity/`, activity)
         .then((response) => {
             console.log(response.data)
             dispatch({ type: CREATE_EVENT_SUCCESS, payload: response.data})
@@ -51,7 +51,7 @@ export const createEvent = ({ id, activity }) => {
 export const editEvent = ({id}) => {
     return (dispatch) => {
         dispatch({type: EDIT_EVENT});
-        axios.patch(`http://172.31.99.199:8000/${id}/updateEvent`)
+        axios.patch(`http://10.0.0.84:8001/${id}/updateEvent`)
         .then((response) => {
             console.log(response.data);
             dispatch({ type: EDIT_EVENT_SUCCESS, payload: response.data})
@@ -64,7 +64,7 @@ export const editEvent = ({id}) => {
 export const deleteEvent = ({id }) => {
     return (dispatch) => {
         dispatch({ type: DELETE_EVENT});
-        axios.delete(`http://172.31.99.199:8000/${id}/deleteEvent`)
+        axios.delete(`http://10.0.0.84:8001/${id}/deleteEvent`)
         .then((response) => {
             console.log(response.data);
             dispatch({ type: DELETE_EVENT_SUCCESS, payload: response.data})

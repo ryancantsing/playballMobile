@@ -30,7 +30,7 @@ import {
         switch(action.type){
             case USER_UPDATE:
                 console.log(action.payload);
-                return {...state, [action.payload.prop] : action.payload.text};
+                return {...state, [action.payload.props] : action.payload.text};
             case CREATE_USER:
                 console.log(action.payload);
                 return {...state, loading: true, error: ''};
